@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body class="auth-body">
+    <div class="auth-shell">
+      <div class="auth-card">
+        <h1>Log In</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="message-stack">
+              {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form class="auth-form" method="post" action="{{ url_for('login_post') }}">
+          <label class="input-block">
+            <span>Username</span>
+            <input type="text" name="username" required />
+          </label>
+
+          <label class="input-block">
+            <span>Password</span>
+            <input type="password" name="password" required />
+          </label>
+
+          <button class="primary-button auth-button" type="submit">Log In</button>
+        </form>
+
+        <p class="auth-switch">
+          Don't have an account?
+          <a href="{{ url_for('register') }}">Sign Up</a>
+        </p>
+
+        <div class="disclaimer-box auth-disclaimer">
+          <strong>Disclaimer</strong>
+          <p>{{ disclaimer }}</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body class="auth-body">
+    <div class="auth-shell">
+      <div class="auth-card">
+        <h1>Sign Up</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="message-stack">
+              {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form class="auth-form" method="post" action="{{ url_for('register_post') }}">
+          <label class="input-block">
+            <span>Username</span>
+            <input type="text" name="username" required />
+          </label>
+
+          <label class="input-block">
+            <span>Password</span>
+            <input type="password" name="password" required />
+          </label>
+
+          <label class="input-block">
+            <span>Confirm Password</span>
+            <input type="password" name="confirm_password" required />
+          </label>
+
+          <button class="primary-button auth-button" type="submit">Create Account</button>
+        </form>
+
+        <p class="auth-switch">
+          Already have an account?
+          <a href="{{ url_for('login') }}">Log In</a>
+        </p>
+
+        <div class="disclaimer-box auth-disclaimer">
+          <strong>Disclaimer</strong>
+          <p>{{ disclaimer }}</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

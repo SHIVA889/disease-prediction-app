@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disease Prediction System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <h1>Disease Prediction System</h1>
+        </div>
+
+        <div class="user-box">
+          <span>Logged in as</span>
+          <strong>{{ user.username }}</strong>
+        </div>
+
+        <nav id="diseaseNav" class="nav-list" aria-label="Disease navigation"></nav>
+
+        <a class="secondary-button link-button" href="{{ url_for('logout') }}">Log Out</a>
+
+        <div class="disclaimer-box sidebar-disclaimer">
+          <strong>Disclaimer</strong>
+          <p>{{ disclaimer }}</p>
+        </div>
+      </aside>
+
+      <main class="content">
+        <section id="predictionPanel" class="panel"></section>
+
+        <section class="panel history-panel">
+          <div class="history-header">
+            <h3>Prediction History</h3>
+            <button id="refreshHistoryButton" class="secondary-button" type="button">
+              Refresh History
+            </button>
+          </div>
+
+          <div id="historyList" class="history-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

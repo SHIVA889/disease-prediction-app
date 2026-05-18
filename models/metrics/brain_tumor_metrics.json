@@ -1,0 +1,116 @@
+{
+  "accuracy": 0.9118,
+  "classification_report": {
+    "glioma": {
+      "precision": 0.9052197802197802,
+      "recall": 0.8728476821192053,
+      "f1-score": 0.8887390424814565,
+      "support": 755.0
+    },
+    "meningioma": {
+      "precision": 0.875,
+      "recall": 0.7948717948717948,
+      "f1-score": 0.8330134357005758,
+      "support": 546.0
+    },
+    "notumor": {
+      "precision": 0.9292543021032504,
+      "recall": 0.997946611909651,
+      "f1-score": 0.9623762376237623,
+      "support": 487.0
+    },
+    "pituitary": {
+      "precision": 0.9325337331334332,
+      "recall": 0.9936102236421726,
+      "f1-score": 0.9621036349574633,
+      "support": 626.0
+    },
+    "accuracy": 0.9117647058823529,
+    "macro avg": {
+      "precision": 0.9105019538641159,
+      "recall": 0.914819078135706,
+      "f1-score": 0.9115580876908145,
+      "support": 2414.0
+    },
+    "weighted avg": {
+      "precision": 0.9103164441307978,
+      "recall": 0.9117647058823529,
+      "f1-score": 0.9100154996570663,
+      "support": 2414.0
+    }
+  },
+  "test_loss": 0.41,
+  "test_accuracy": 0.9118,
+  "dataset_root": "C:\\Users\\ADMIN\\OneDrive\\Documents\\Disease_project\\datasets\\brain_tumor_mri\\Epic and CSCR hospital Dataset",
+  "image_size": [
+    96,
+    96
+  ],
+  "batch_size": 32,
+  "epochs_requested": 12,
+  "epochs_trained": 12,
+  "classes": [
+    "glioma",
+    "meningioma",
+    "notumor",
+    "pituitary"
+  ],
+  "history": {
+    "accuracy": [
+      0.6766,
+      0.8256,
+      0.8968,
+      0.9319,
+      0.9569,
+      0.9702,
+      0.9786,
+      0.9803,
+      0.9858,
+      0.9912,
+      0.9909,
+      0.9891
+    ],
+    "val_accuracy": [
+      0.9295,
+      0.9896,
+      0.971,
+      0.9927,
+      0.9933,
+      0.9927,
+      0.9917,
+      0.9953,
+      0.9938,
+      0.9969,
+      0.9953,
+      0.9953
+    ],
+    "loss": [
+      0.8088,
+      0.4671,
+      0.2852,
+      0.1894,
+      0.1192,
+      0.0823,
+      0.0654,
+      0.0573,
+      0.0447,
+      0.0303,
+      0.028,
+      0.0328
+    ],
+    "val_loss": [
+      0.3032,
+      0.0631,
+      0.0992,
+      0.0455,
+      0.0296,
+      0.0155,
+      0.0295,
+      0.0164,
+      0.0183,
+      0.0091,
+      0.0138,
+      0.0131
+    ]
+  }
+}
