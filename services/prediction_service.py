@@ -3,7 +3,6 @@ from io import BytesIO
 
 import numpy as np
 import pandas as pd
-import tensorflow as tf
 from PIL import Image, ImageOps
 
 from services.symptom_mapper import (
@@ -46,10 +45,13 @@ def _get_brain_cnn_model():
     global _brain_cnn_cache
 
     if _brain_cnn_cache is None:
+        import tensorflow as tf
+
         if not BRAIN_MODEL_PATH.exists():
             raise FileNotFoundError(
                 f"Saved brain CNN model not found at {BRAIN_MODEL_PATH}. Train the model first."
             )
+
         _brain_cnn_cache = tf.keras.models.load_model(BRAIN_MODEL_PATH)
 
     return _brain_cnn_cache
