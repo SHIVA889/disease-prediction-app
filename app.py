@@ -1,6 +1,7 @@
 import os
 from functools import wraps
 from pathlib import Path
+from datetime import timedelta
 
 from flask import (
     Flask,
@@ -12,6 +13,7 @@ from flask import (
     session,
     url_for,
 )
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from database.auth_db import (
     AuthError,
@@ -32,16 +34,21 @@ from training.config import PROJECT_DISCLAIMER
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent
+IS_PRODUCTION = os.environ.get("RENDER") == "true" or os.environ.get("FLASK_ENV") == "production"
+ASSET_VERSION = os.environ.get("RENDER_GIT_COMMIT", "20260520")
 
 app = Flask(
     __name__,
     template_folder=str(PROJECT_ROOT / "templates"),
     static_folder=str(PROJECT_ROOT / "static"),
 )
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "disease-project-dev-secret")
-app.config["SESSION_COOKIE_SECURE"] = True
+app.config["SESSION_COOKIE_SECURE"] = IS_PRODUCTION
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["PREFERRED_URL_SCHEME"] = "https"
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=7)
 app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
 
 init_db()
@@ -53,6 +60,11 @@ def current_user():
     if not user_id:
         return None
     return get_user_by_id(user_id)
+
+
+@app.context_processor
+def inject_asset_version():
+    return {"asset_version": ASSET_VERSION}
 
 
 def login_required(view_function):
@@ -101,6 +113,7 @@ def login_post():
         flash("Incorrect username or password. Please try again.", "error")
         return redirect(url_for("login"))
 
+    session.permanent = True
     session["user_id"] = user["id"]
     flash("Login successful.", "success")
     return redirect(url_for("dashboard"))
@@ -129,6 +142,7 @@ def register_post():
         flash(str(error), "error")
         return redirect(url_for("register"))
 
+    session.permanent = True
     session["user_id"] = user["id"]
     flash("Account created successfully.", "success")
     return redirect(url_for("dashboard"))

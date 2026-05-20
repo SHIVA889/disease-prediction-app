@@ -289,6 +289,7 @@ async function submitTabularPrediction(form, disease) {
 
   const response = await fetch(disease.endpoint, {
     method: "POST",
+    credentials: "same-origin",
     headers: {
       "Content-Type": "application/json"
     },
@@ -311,6 +312,7 @@ async function submitBrainTumorPrediction(form, disease) {
 
   const response = await fetch(disease.endpoint, {
     method: "POST",
+    credentials: "same-origin",
     body: uploadData
   });
 
@@ -423,7 +425,9 @@ async function loadHistory() {
   historyList.innerHTML = `<div class="history-empty">Loading history...</div>`;
 
   try {
-    const response = await fetch("/api/predictions/history");
+    const response = await fetch("/api/predictions/history", {
+      credentials: "same-origin"
+    });
     const data = await handleJsonResponse(response);
     renderHistory(data.predictions || []);
   } catch (error) {
@@ -484,12 +488,12 @@ function formatDate(value) {
 }
 
 function escapeHtml(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+  return String(value == null ? "" : value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 diseaseNav.addEventListener("click", (event) => {
