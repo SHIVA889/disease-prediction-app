@@ -39,6 +39,9 @@ app = Flask(
     static_folder=str(PROJECT_ROOT / "static"),
 )
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "disease-project-dev-secret")
+app.config["SESSION_COOKIE_SECURE"] = True
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
 
 init_db()
